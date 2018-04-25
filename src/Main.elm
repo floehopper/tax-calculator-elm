@@ -1,19 +1,22 @@
 module Main exposing (..)
 
-import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (onInput)
 
+import EmployeeNationalInsurance as EmployeeNI exposing (..)
+import EmployerNationalInsurance as EmployerNI exposing (..)
 
 ---- MODEL ----
 
 
 type alias Model =
-    {}
+    { salary: Float }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( { salary = 30000 }, Cmd.none )
 
 
 
@@ -21,13 +24,18 @@ init =
 
 
 type Msg
-    = NoOp
+    = Change String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+      Change newSalary ->
+      ( { model | salary = parseValue newSalary 0 }, Cmd.none)
 
+parseValue : String -> Float -> Float
+parseValue value default =
+    String.toFloat value |> Result.toMaybe |> Maybe.withDefault default
 
 
 ---- VIEW ----
@@ -35,11 +43,23 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , h1 [] [ text "Your Elm App is working!" ]
-        ]
+    let
+        employeeContributions =
+          roundToNearestPenny (EmployeeNI.taxFor (EmployeeNI.taxBandsFor2018to2019 EmployeeNI.configFor2018to2019) model.salary)
+        employerContributions =
+          roundToNearestPenny (EmployerNI.taxFor (EmployerNI.taxBandsFor2018to2019 EmployerNI.configFor2018to2019) model.salary)
+    in
+      div []
+          [
+            h1 [] [ text "Tax Calculator" ],
+            input [ type_ "number", placeholder "Salary", value <| toString model.salary, onInput Change ] [],
+            p [] [ text "Employee Contributions: £", text <| toString employeeContributions ],
+            p [] [ text "Employer Contributions: £", text <| toString employerContributions ]
+          ]
 
+roundToNearestPenny : Float -> Float
+roundToNearestPenny value =
+    (toFloat (round (value * 100.0))) / 100.0
 
 
 ---- PROGRAM ----
