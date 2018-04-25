@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (..)
 
 import EmployeeNationalInsurance as EmployeeNI exposing (..)
 import EmployerNationalInsurance as EmployerNI exposing (..)

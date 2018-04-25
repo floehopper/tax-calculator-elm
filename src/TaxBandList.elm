@@ -1,4 +1,4 @@
-module TaxBandList exposing (..)
+module TaxBandList exposing (TaxBandList, taxFor)
 
 import TaxBand exposing (..)
 

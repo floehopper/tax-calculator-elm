@@ -1,4 +1,4 @@
-module TaxBand exposing (..)
+module TaxBand exposing (TaxBand, taxFor)
 
 type alias TaxBand =
   { minimum: Float
