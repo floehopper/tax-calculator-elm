@@ -6,6 +6,7 @@ import Html.Events exposing (onInput)
 
 import EmployeeNationalInsurance as EmployeeNI exposing (..)
 import EmployerNationalInsurance as EmployerNI exposing (..)
+import TaxBandList exposing (..)
 
 ---- MODEL ----
 
@@ -45,9 +46,9 @@ view : Model -> Html Msg
 view model =
     let
         employeeContributions =
-          roundToNearestPenny (EmployeeNI.taxFor (EmployeeNI.taxBandsFor2018to2019 EmployeeNI.configFor2018to2019) model.salary)
+          roundToNearestPenny (TaxBandList.taxFor (EmployeeNI.taxBandsFor2018to2019 EmployeeNI.configFor2018to2019) model.salary)
         employerContributions =
-          roundToNearestPenny (EmployerNI.taxFor (EmployerNI.taxBandsFor2018to2019 EmployerNI.configFor2018to2019) model.salary)
+          roundToNearestPenny (TaxBandList.taxFor (EmployerNI.taxBandsFor2018to2019 EmployerNI.configFor2018to2019) model.salary)
     in
       div []
           [
