@@ -17,3 +17,7 @@ taxBandsFor2018to2019 =
     , TaxBand config.primaryThreshold config.upperEarningsLimit 12.0
     , TaxBand config.upperEarningsLimit (1/0) 2.0
     ]
+
+taxFor2018to2019 : Float -> Float
+taxFor2018to2019 salary =
+  TaxBandList.taxFor taxBandsFor2018to2019 salary
