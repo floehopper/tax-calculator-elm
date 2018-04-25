@@ -46,9 +46,9 @@ view : Model -> Html Msg
 view model =
     let
         employeeContributions =
-          roundToNearestPenny (TaxBandList.taxFor (EmployeeNI.taxBandsFor2018to2019 EmployeeNI.configFor2018to2019) model.salary)
+          roundToNearestPenny (TaxBandList.taxFor EmployeeNI.taxBandsFor2018to2019 model.salary)
         employerContributions =
-          roundToNearestPenny (TaxBandList.taxFor (EmployerNI.taxBandsFor2018to2019 EmployerNI.configFor2018to2019) model.salary)
+          roundToNearestPenny (TaxBandList.taxFor EmployerNI.taxBandsFor2018to2019 model.salary)
     in
       div []
           [
